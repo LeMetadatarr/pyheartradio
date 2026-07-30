@@ -21,7 +21,7 @@ these keys:
 Podcast episodes also carry `iheart_podcast_id` so the parent show is
 always recoverable from a single episode record.
 
-Track results additionally carry `iheart_artist_id` when available.
+Track results also carry `iheart_artist_id` when available.
 
 ## Stream URLs
 
@@ -33,7 +33,7 @@ model that has a direct audio URL:
 |---|---|---|
 | `Station` | When `.stream` is non-empty | `"radio"` |
 | `PodcastEpisode` | When `.stream` is non-empty | `"radio"` |
-| `Track` | Never — not available from API | — |
+| `Track` | Never, not available from the API | Not applicable |
 
 So this always works:
 
@@ -46,7 +46,7 @@ station = next(client.search_stations("jazz"))
 
 ids = ExternalIds.from_dict(station.to_external_ids())
 for s in ids.streams:
-    print(s.platform, s.url)   # → radio  https://…
+    print(s.platform, s.url)   # -> radio  https://...
 ```
 
 ## Signals
@@ -55,11 +55,11 @@ for s in ids.streams:
 
 | Field | Station | Podcast/Episode | Track | Artist |
 |---|---|---|---|---|
-| `title` | ✓ | ✓ | ✓ | ✓ |
+| `title` | Yes | Yes | Yes | Yes |
 | `medium` | `"radio"` | `"podcast"` | `"music"` | `"music"` |
-| `artist` | — | — | ✓ when set | — |
-| `album` | — | — | ✓ when set | — |
-| `duration` | — | ✓ when set | — | — |
+| `artist` | No | No | Yes, when set | No |
+| `album` | No | No | Yes, when set | No |
+| `duration` | No | Yes, when set | No | No |
 
 ```python
 from mediavocab.models.signals import Signals
@@ -69,7 +69,7 @@ signals = Signals(**track.to_signals())
 # Signals(title="Heroes", medium=<MediaType.MUSIC>, artist="David Bowie", album="Heroes")
 ```
 
-## ProviderMatch — wrapping results for metadatarr resolution
+## ProviderMatch: wrapping results for metadatarr resolution
 
 To run a pyheartradio result through `metadatarr.resolve.consolidate` or
 `resolve`, wrap it in a `ProviderMatch`:
@@ -140,10 +140,10 @@ stream_url         = "https://fm939.wnyc.org/wnycfm.aac"
 
 ## Artist cross-resolution
 
-iHeartRadio artist IDs alone are not enough for cross-provider merging —
-they have no known mapping to MusicBrainz or Wikidata.  The recommended
+iHeartRadio artist IDs alone are not enough for cross-provider merging.
+They have no known mapping to MusicBrainz or Wikidata. The recommended
 approach is to use the artist name as the primary `Signals.title` signal
-and let metadatarr's MusicBrainz / Wikidata providers fill in the
+and let metadatarr's MusicBrainz and Wikidata providers fill in the
 authoritative IDs:
 
 ```python
@@ -158,3 +158,6 @@ print(result.external_ids.wikidata)             # "Q5383"
 
 The `iheart_artist_id` is preserved in `result.external_ids.extra` so it
 round-trips without data loss.
+
+---
+[← API methods](methods.md) · [Home](README.md) · [Advanced usage →](advanced.md)

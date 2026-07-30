@@ -17,7 +17,7 @@ class Station:
     stream: str        # Direct playable stream URL (HLS, MP3, or AAC)
 ```
 
-Stations always have a non-empty `.stream` — results without a stream URL
+Stations always have a non-empty `.stream`. Results without a stream URL
 are silently skipped by the client.
 
 ### Methods
@@ -202,9 +202,12 @@ from dataclasses import asdict
 d = asdict(station)
 ```
 
-### JSON serialisation
+### JSON serialization
 
 ```python
 import json, dataclasses
 json.dumps(dataclasses.asdict(station))
 ```
+
+---
+[← Quickstart](quickstart.md) · [Home](README.md) · [API methods →](methods.md)

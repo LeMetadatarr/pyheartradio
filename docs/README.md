@@ -1,13 +1,12 @@
-# pyheartradio — documentation
+# pyheartradio documentation
 
-A Python client for the iHeartRadio public API.  Search and stream radio
-stations, podcasts, artists, tracks, and playlists.
+pyheartradio is a Python client for the iHeartRadio public API. It searches and streams radio stations, podcasts, artists, tracks, and playlists.
 
 ## Contents
 
 | Document | Audience |
 |---|---|
-| [Quickstart](quickstart.md) | New users — get results in 5 minutes |
+| [Quickstart](quickstart.md) | New users: get results in 5 minutes |
 | [Data models](models.md) | Reference for every returned type |
 | [API methods](methods.md) | Full method signatures and parameters |
 | [metadatarr integration](metadatarr.md) | Cross-provider resolution and canonical IDs |
@@ -32,6 +31,6 @@ for station in client.search_stations("jazz"):
 
 ## Where to go next
 
-- New here?  Start with [Quickstart](quickstart.md).
-- Want to wire results into a media player or metadatarr?  See [metadatarr integration](metadatarr.md).
-- Need all the details on a specific method?  See [API methods](methods.md).
+- New here? Start with [Quickstart](quickstart.md).
+- Want to wire results into a media player or metadatarr? See [metadatarr integration](metadatarr.md).
+- Need all the details on a specific method? See [API methods](methods.md).
