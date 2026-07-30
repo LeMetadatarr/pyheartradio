@@ -18,7 +18,7 @@ client = IHeartRadio()
 
 No API key, no account, no configuration required.
 
-To customise the HTTP timeout (default is 10 seconds):
+To customize the HTTP timeout (the default is 10 seconds):
 
 ```python
 client = IHeartRadio(timeout=5)
@@ -76,7 +76,7 @@ for track in client.search_track("Heroes"):
 ```
 
 > **Note:** iHeartRadio does not expose stream URLs for individual tracks
-> via the public API.  Use stations or podcast episodes for playable content.
+> through the public API. Use stations or podcast episodes for playable content.
 
 ## Search for a playlist
 
@@ -97,7 +97,7 @@ if station:
 
 ## Collect all results
 
-All search methods return iterators.  Wrap in `list()` to materialise them:
+All search methods return iterators. Wrap the call in `list()` to materialize them:
 
 ```python
 stations = list(client.search_stations("jazz"))
@@ -106,6 +106,9 @@ print(f"{len(stations)} stations found")
 
 ## Next steps
 
-- [Data models](models.md) — what fields each result type carries
-- [API methods](methods.md) — all parameters
-- [metadatarr integration](metadatarr.md) — canonical IDs, cross-provider resolution
+- [Data models](models.md): the fields each result type carries
+- [API methods](methods.md): all parameters
+- [metadatarr integration](metadatarr.md): canonical IDs, cross-provider resolution
+
+---
+[Home](README.md) · [Data models →](models.md)

@@ -1,6 +1,6 @@
 # pyheartradio
 
-Python client for the iHeartRadio public API. Search and stream live radio stations, podcasts, artists, tracks, and playlists. No API key or account required.
+pyheartradio is a Python client for the iHeartRadio public API. It searches and streams live radio stations, podcasts, artists, tracks, and playlists. It needs no API key and no account.
 
 ```python
 from pyheartradio import IHeartRadio
@@ -18,21 +18,21 @@ pip install pyheartradio
 
 ## Features
 
-- Search **stations**, **podcasts**, **artists**, **tracks**, **playlists**
-- Retrieve podcast episodes with direct audio stream URLs
-- Typed dataclass models — IDE completion, `dataclasses.asdict()`, JSON serialisation
-- Parallel detail fetches — station and artist lookups run concurrently, not sequentially
-- `to_external_ids()` / `to_signals()` on every model for [metadatarr](https://github.com/OpenJarbas/metadatarr) integration
-- Session reuse and configurable timeout; attach any cache adapter via `client.session`
+- Search stations, podcasts, artists, tracks, and playlists
+- Get podcast episodes with direct audio stream URLs
+- Typed dataclass models, for IDE completion, `dataclasses.asdict()`, and JSON serialization
+- Parallel detail fetches. Station and artist lookups run concurrently, not sequentially
+- `to_external_ids()` and `to_signals()` on every model, for [metadatarr](https://github.com/TigreGotico/metadatarr) integration
+- Session reuse and a configurable timeout. Attach any cache adapter through `client.session`
 
 ## Quick examples
 
 ```python
 client = IHeartRadio(timeout=5, max_workers=4)
 
-# Stations — stream URL included
+# Stations: stream URL included
 for station in client.search_stations("classic rock", max_results=3):
-    print(station.title, "→", station.stream)
+    print(station.title, "->", station.stream)
 
 # Podcasts + episodes
 podcast = next(client.search_podcast("Serial"))
@@ -43,7 +43,7 @@ for ep in client.get_podcast_episodes(podcast.id):
 artist = next(client.search_artist("David Bowie"))
 print(artist.title, len(artist.albums), "albums")
 
-# Tracks (metadata only — no stream URL available from API)
+# Tracks (metadata only, no stream URL available from the API)
 for track in client.search_track("Heroes"):
     print(track.title, track.artist)
 ```
@@ -58,7 +58,7 @@ from mediavocab.models import ExternalIds
 station = next(client.search_stations("WNYC"))
 ids = ExternalIds.from_dict(station.to_external_ids())
 for stream in ids.streams:
-    print(stream.platform, stream.url)   # → radio  https://…
+    print(stream.platform, stream.url)   # -> radio  https://...
 ```
 
 See [docs/metadatarr.md](docs/metadatarr.md) for the full integration guide.
@@ -88,6 +88,11 @@ client.session = CacheControl(client.session)
 - [API methods](docs/methods.md)
 - [metadatarr integration](docs/metadatarr.md)
 - [Advanced usage](docs/advanced.md)
+
+## Related projects
+
+- [TigreGotico/metadatarr](https://github.com/TigreGotico/metadatarr): the entity-resolution layer pyheartradio results plug into
+- [TigreGotico/mediavocab](https://github.com/TigreGotico/mediavocab): supplies the `ExternalIds` and `Signals` models used by the metadatarr integration
 
 ## License
 

@@ -19,11 +19,11 @@ Control concurrency with `max_workers` (default: 6):
 
 ```python
 client = IHeartRadio(max_workers=10)   # more aggressive parallelism
-client = IHeartRadio(max_workers=1)    # sequential — useful for debugging
+client = IHeartRadio(max_workers=1)    # sequential, useful for debugging
 ```
 
-Failed detail fetches are silently skipped; the iterator continues with
-the remaining results.  Adjust `timeout` if your network has higher
+Failed detail fetches are silently skipped. The iterator continues with
+the remaining results. Adjust `timeout` if your network has higher
 latency.
 
 ## Limit result count
@@ -79,8 +79,8 @@ client.session.headers.update({"User-Agent": "MyApp/1.0"})
 
 ## Caching
 
-Station stream URLs are extremely stable — they rarely change over months
-or years.  You do not need `requests-cache` as a hard dependency; attach
+Station stream URLs are extremely stable. They rarely change over months
+or years. You do not need `requests-cache` as a hard dependency. Attach
 any cache adapter to the session instead.
 
 **With `requests-cache` (global):**
@@ -112,10 +112,10 @@ def cached_stream(station_id: int) -> str:
     return _stream_cache.get(station_id, "")
 ```
 
-## Iterating vs materialising
+## Iterating vs materializing
 
-Search methods return **lazy iterators** — no HTTP calls are made until you
-start consuming them.  This means you can `break` early and avoid unnecessary
+Search methods return lazy iterators. No HTTP calls are made until you
+start consuming them. This means you can `break` early and avoid unnecessary
 requests:
 
 ```python
@@ -186,4 +186,7 @@ df = pd.DataFrame([dataclasses.asdict(s) for s in client.search_stations("jazz")
 **attrs / pydantic wrapping:**
 
 All fields have simple Python types (`int`, `str`, `Optional[int]`,
-`List[dict]`) so they deserialise cleanly into any schema library.
+`List[dict]`) so they deserialize cleanly into any schema library.
+
+---
+[← metadatarr integration](metadatarr.md) · [Home](README.md)
