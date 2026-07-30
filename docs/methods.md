@@ -158,3 +158,6 @@ except requests.Timeout:
 except requests.ConnectionError:
     print("No network")
 ```
+
+---
+[← Data models](models.md) · [Home](README.md) · [metadatarr integration →](metadatarr.md)
