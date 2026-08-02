@@ -10,15 +10,18 @@ Returned by `search_stations()`.
 ```python
 @dataclass
 class Station:
-    id: int            # iHeartRadio station ID
-    title: str         # Station name
-    description: str   # One-line description (may be empty)
-    image: str         # Artwork / logo URL
-    stream: str        # Direct playable stream URL (HLS, MP3, or AAC)
+    id: int                        # iHeartRadio station ID
+    title: str                     # Station name
+    description: str               # One-line description (may be empty)
+    image: str                     # Artwork / logo URL
+    stream: str                    # Preferred playable stream URL (HLS, MP3, or AAC)
+    streams: Dict[str, str]        # All available formats, keyed by format name
 ```
 
 Stations always have a non-empty `.stream`. Results without a stream URL
-are silently skipped by the client.
+are silently skipped by the client. `.streams` holds every format the
+station broadcasts (for example `{"hls_stream": "https://…", "shoutcast_stream": "https://…"}`),
+so callers can pick a specific format instead of the preferred one.
 
 ### Methods
 
@@ -41,6 +44,35 @@ The `stream_url` key is recognised by `ExternalIds.streams` and surfaces as
 ```python
 {"title": "KROQ-FM", "medium": "radio"}
 ```
+
+---
+
+## NowPlaying
+
+Returned by `get_now_playing()`.
+
+```python
+@dataclass
+class NowPlaying:
+    station_id: int
+    title: str
+    artist: str
+    album: str
+    image: str
+    duration: Optional[int]    # seconds; None when the station omits it
+```
+
+All fields except `station_id` may be empty when the station does not
+broadcast now-playing metadata.
+
+### Methods
+
+```python
+to_external_ids() → {"iheart_station_id": "7556"}
+to_signals()      → {"medium": "music", "title": "…", "artist": "…"}
+```
+
+Only the fields that are actually set are included in `to_signals()`.
 
 ---
 
@@ -130,6 +162,33 @@ to_external_ids() → {"iheart_track_id": "555", "iheart_artist_id": "100"}
 to_signals()      → {"title": "Heroes", "medium": "music",
                       "artist": "David Bowie", "album": "Heroes"}
 ```
+
+---
+
+## Album
+
+Returned by `get_artist_albums()`.
+
+```python
+@dataclass
+class Album:
+    id: Optional[int]          # None when the API omits an identifier
+    title: str
+    artist: str
+    artist_id: Optional[int]
+    year: Optional[int]
+    image: str
+    track_count: Optional[int]
+```
+
+### Methods
+
+```python
+to_external_ids() → {"iheart_album_id": "…", "iheart_artist_id": "…"}
+to_signals()      → {"title": "…", "medium": "music", "artist": "…", "year": …}
+```
+
+Only the fields that are actually set are included in both outputs.
 
 ---
 
