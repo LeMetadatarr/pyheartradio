@@ -1,20 +1,28 @@
 # Changelog
 
-## [0.1.1a2](https://github.com/TigreGotico/pyheartradio/tree/0.1.1a2) (2026-07-30)
+## [0.1.1a3](https://github.com/LeMetadatarr/pyheartradio/tree/0.1.1a3) (2026-08-02)
 
-[Full Changelog](https://github.com/TigreGotico/pyheartradio/compare/0.1.1a1...0.1.1a2)
-
-**Merged pull requests:**
-
-- docs: rewrite README in Simplified Technical English [\#10](https://github.com/TigreGotico/pyheartradio/pull/10) ([JarbasAl](https://github.com/JarbasAl))
-
-## [0.1.1a1](https://github.com/TigreGotico/pyheartradio/tree/0.1.1a1) (2026-05-28)
-
-[Full Changelog](https://github.com/TigreGotico/pyheartradio/compare/0.1.0...0.1.1a1)
+[Full Changelog](https://github.com/LeMetadatarr/pyheartradio/compare/0.1.1a2...0.1.1a3)
 
 **Merged pull requests:**
 
-- Configure Renovate [\#1](https://github.com/TigreGotico/pyheartradio/pull/1) ([renovate[bot]](https://github.com/apps/renovate))
+- docs: QA pass — accuracy, org-move URLs, related projects [\#12](https://github.com/LeMetadatarr/pyheartradio/pull/12) ([JarbasAl](https://github.com/JarbasAl))
+
+## [0.1.1a2](https://github.com/LeMetadatarr/pyheartradio/tree/0.1.1a2) (2026-07-30)
+
+[Full Changelog](https://github.com/LeMetadatarr/pyheartradio/compare/0.1.1a1...0.1.1a2)
+
+**Merged pull requests:**
+
+- docs: rewrite README in Simplified Technical English [\#10](https://github.com/LeMetadatarr/pyheartradio/pull/10) ([JarbasAl](https://github.com/JarbasAl))
+
+## [0.1.1a1](https://github.com/LeMetadatarr/pyheartradio/tree/0.1.1a1) (2026-05-28)
+
+[Full Changelog](https://github.com/LeMetadatarr/pyheartradio/compare/0.1.0...0.1.1a1)
+
+**Merged pull requests:**
+
+- Configure Renovate [\#1](https://github.com/LeMetadatarr/pyheartradio/pull/1) ([renovate[bot]](https://github.com/apps/renovate))
 
 
 
