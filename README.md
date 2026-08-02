@@ -22,7 +22,7 @@ pip install pyheartradio
 - Get podcast episodes with direct audio stream URLs
 - Typed dataclass models, for IDE completion, `dataclasses.asdict()`, and JSON serialization
 - Parallel detail fetches. Station and artist lookups run concurrently, not sequentially
-- `to_external_ids()` and `to_signals()` on every model, for [metadatarr](https://github.com/TigreGotico/metadatarr) integration
+- `to_external_ids()` and `to_signals()` on every model, for [metadatarr](https://github.com/LeMetadatarr/metadatarr) integration
 - Session reuse and a configurable timeout. Attach any cache adapter through `client.session`
 
 ## Quick examples
@@ -91,7 +91,7 @@ client.session = CacheControl(client.session)
 
 ## Related projects
 
-- [TigreGotico/metadatarr](https://github.com/TigreGotico/metadatarr): the entity-resolution layer pyheartradio results plug into
+- [LeMetadatarr/metadatarr](https://github.com/LeMetadatarr/metadatarr): the entity-resolution layer pyheartradio results plug into
 - [TigreGotico/mediavocab](https://github.com/TigreGotico/mediavocab): supplies the `ExternalIds` and `Signals` models used by the metadatarr integration
 
 ## License
