@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.1a5](https://github.com/LeMetadatarr/pyheartradio/tree/0.1.1a5) (2026-08-03)
+
+[Full Changelog](https://github.com/LeMetadatarr/pyheartradio/compare/0.1.1a4...0.1.1a5)
+
+**Merged pull requests:**
+
+- deep: bugs, real-fixture tests, docs/examples [\#14](https://github.com/LeMetadatarr/pyheartradio/pull/14) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.1.1a4](https://github.com/LeMetadatarr/pyheartradio/tree/0.1.1a4) (2026-08-03)
 
 [Full Changelog](https://github.com/LeMetadatarr/pyheartradio/compare/0.1.1a3...0.1.1a4)
