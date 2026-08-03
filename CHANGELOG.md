@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.1a4](https://github.com/LeMetadatarr/pyheartradio/tree/0.1.1a4) (2026-08-03)
+
+[Full Changelog](https://github.com/LeMetadatarr/pyheartradio/compare/0.1.1a3...0.1.1a4)
+
+**Merged pull requests:**
+
+- ci: grant conventional-label workflow write permissions [\#13](https://github.com/LeMetadatarr/pyheartradio/pull/13) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.1.1a3](https://github.com/LeMetadatarr/pyheartradio/tree/0.1.1a3) (2026-08-02)
 
 [Full Changelog](https://github.com/LeMetadatarr/pyheartradio/compare/0.1.1a2...0.1.1a3)
