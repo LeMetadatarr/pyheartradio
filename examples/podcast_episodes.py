@@ -5,6 +5,7 @@ Run:
     python examples/podcast_episodes.py "Serial"
 """
 import sys
+
 from pyheartradio import IHeartRadio
 
 client = IHeartRadio()

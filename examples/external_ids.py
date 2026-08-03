@@ -12,6 +12,7 @@ Run:
     python examples/external_ids.py
 """
 from pprint import pprint
+
 from pyheartradio.models import Artist, Playlist, Podcast, PodcastEpisode, Station, Track
 
 print("=" * 60)
@@ -80,9 +81,9 @@ print("=" * 60)
 try:
     from mediavocab.models import ExternalIds
     ids = ExternalIds.from_dict(station.to_external_ids())
-    print(f"\n  ExternalIds.from_dict(station.to_external_ids())")
+    print("\n  ExternalIds.from_dict(station.to_external_ids())")
     print(f"  ids.extra = {ids.extra}")
-    print(f"  ids.streams:")
+    print("  ids.streams:")
     for s in ids.streams:
         print(f"    Stream(platform={s.platform!r}, url={s.url!r})")
 except ImportError:

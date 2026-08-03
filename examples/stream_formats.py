@@ -10,6 +10,7 @@ Run:
     python examples/stream_formats.py "NPR"
 """
 import sys
+
 from pyheartradio import IHeartRadio
 
 client = IHeartRadio()

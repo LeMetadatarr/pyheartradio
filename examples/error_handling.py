@@ -7,6 +7,7 @@ Run:
     python examples/error_handling.py
 """
 import requests
+
 from pyheartradio import IHeartRadio
 
 # ── Timeout ───────────────────────────────────────────────────────────────

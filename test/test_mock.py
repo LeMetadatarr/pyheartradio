@@ -1,10 +1,19 @@
 from threading import Lock
 from unittest.mock import MagicMock, patch
+
 import pytest
+
 from pyheartradio import IHeartRadio
 from pyheartradio.models import (
-    Album, Artist, NowPlaying, Playlist, Podcast, PodcastEpisode,
-    SearchResults, Station, Track,
+    Album,
+    Artist,
+    NowPlaying,
+    Playlist,
+    Podcast,
+    PodcastEpisode,
+    SearchResults,
+    Station,
+    Track,
 )
 
 
@@ -264,6 +273,24 @@ def test_custom_timeout_and_workers():
     assert c.max_workers == 2
 
 
+def test_zero_max_workers_does_not_crash():
+    """Regression test: ThreadPoolExecutor(max_workers=0) raises ValueError.
+    A client constructed with max_workers=0 (or a negative value) must still
+    be able to fetch parallel detail data instead of crashing on every
+    search that fans out (search_stations, search_artist, ...)."""
+    c = IHeartRadio(max_workers=0)
+    search_data = {"results": {"stations": [{"id": 1, "name": "Rock FM"}]}}
+    station_data = {
+        "hits": [{"streams": {"shoutcast_stream": "http://stream.example.com"},
+                  "logo": "", "description": ""}]
+    }
+    with patch.object(c.session, "get",
+                      side_effect=[_mock_get(search_data), _mock_get(station_data)]):
+        results = list(c.search_stations("rock"))
+    assert len(results) == 1
+    assert results[0].title == "Rock FM"
+
+
 # ---------------------------------------------------------------------------
 # Station streams dict
 # ---------------------------------------------------------------------------
@@ -372,13 +399,14 @@ def test_get_track(client):
 
 
 def test_get_track_null_track_key_does_not_corrupt(client):
-    """track: null must not fall back to the envelope dict and silently pass."""
+    """track: null must not fall back to a wrapped track dict and silently pass."""
     data = {"track": None, "status": "not_found", "id": 0}
     with patch.object(client.session, "get", return_value=_mock_get(data)):
         track = client.get_track(99)
-    # Falls back to the envelope dict; id=0 is falsy so track_id sentinel is used
-    # and title comes from envelope keys (absent → "")
-    assert track.id == 99  # sentinel from track_id arg
+    # Falls back to the envelope dict. The envelope's own id=0 is an explicit
+    # value (not absent), so it is used as-is rather than being replaced by
+    # the track_id sentinel; title comes from envelope keys (absent → "").
+    assert track.id == 0
     assert track.title == ""  # envelope has no title
 
 
@@ -389,6 +417,17 @@ def test_get_track_no_track_key_uses_envelope(client):
         track = client.get_track(55)
     assert track.id == 55
     assert track.title == "Direct"
+
+
+def test_get_track_zero_id_not_discarded(client):
+    """Regression test: 'raw.get("id") or track_id' treated an id of 0 as
+    falsy and silently replaced it with the requested track_id, corrupting
+    the id on any (however unusual) track whose real id is 0."""
+    data = {"track": {"id": 0, "title": "Zero Id Track"}}
+    with patch.object(client.session, "get", return_value=_mock_get(data)):
+        track = client.get_track(99)
+    assert track.id == 0
+    assert track.title == "Zero Id Track"
 
 
 # ---------------------------------------------------------------------------
@@ -419,6 +458,32 @@ def test_get_similar_artists(client):
     assert len(similar) == 1
     assert isinstance(similar[0], Artist)
     assert similar[0].title == "Roxy Music"
+
+
+def test_get_similar_artists_real_response_shape(client):
+    """Regression test for a real bug: the live endpoint nests results under
+    "similarArtists" with "artistId"/"artistName"/"link" fields, not
+    "artists"/"data" with "id"/"name"/"image". The old code always returned
+    an empty list against the real API. Fixture recorded from
+    https://us.api.iheart.com/api/v1/catalog/artist/27770/getSimilar on
+    2026-08-03 (test/fixtures/similar_artists_27770.json)."""
+    import json
+    import os
+
+    fixture_path = os.path.join(os.path.dirname(__file__), "fixtures",
+                                "similar_artists_27770.json")
+    with open(fixture_path) as f:
+        data = json.load(f)
+
+    with patch.object(client.session, "get", return_value=_mock_get(data)):
+        similar = list(client.get_similar_artists(27770))
+
+    assert len(similar) > 0
+    first = similar[0]
+    assert isinstance(first, Artist)
+    assert first.id == 4258
+    assert first.title == "Queen"
+    assert first.image == "http://image.iheart.com/images/rovi/1080/0007/384/MI0007384622.jpg"
 
 
 # ---------------------------------------------------------------------------

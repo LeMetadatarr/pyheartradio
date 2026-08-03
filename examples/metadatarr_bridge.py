@@ -17,15 +17,14 @@ from __future__ import annotations
 try:
     from mediavocab.models import ExternalIds
     from mediavocab.models.signals import Signals
-    from mediavocab import MediaType
+    from metadatarr.resolve.base import ProviderMatch
     from metadatarr.resolve.entities import EntityRole, ProviderEntity
-    from metadatarr.resolve.base import ProviderMatch, consolidate
     HAS_METADATARR = True
 except ImportError:
     HAS_METADATARR = False
 
 from pyheartradio import IHeartRadio
-from pyheartradio.models import Artist, PodcastEpisode, Station
+from pyheartradio.models import Artist
 
 client = IHeartRadio()
 
