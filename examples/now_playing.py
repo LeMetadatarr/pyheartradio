@@ -8,6 +8,7 @@ Run:
     python examples/now_playing.py "KROQ"
 """
 import sys
+
 from pyheartradio import IHeartRadio
 
 client = IHeartRadio()

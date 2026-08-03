@@ -21,11 +21,15 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from pyheartradio import IHeartRadio
-from pyheartradio import _STREAM_FORMAT_PREFERENCE
+from pyheartradio import _STREAM_FORMAT_PREFERENCE, IHeartRadio
 from pyheartradio.models import (
-    Album, Artist, NowPlaying, Playlist, Podcast, PodcastEpisode,
-    SearchResults, Station, Track,
+    Album,
+    NowPlaying,
+    Podcast,
+    PodcastEpisode,
+    SearchResults,
+    Station,
+    Track,
 )
 
 
@@ -152,7 +156,6 @@ class TestMaxResults:
     def _capture_payload(self, client, method_name, *args, **kwargs):
         """Call method, capture the params dict from the first _get call."""
         captured = {}
-        original = client._get
         def intercepting_get(url, params=None):
             if not captured:
                 captured["params"] = params

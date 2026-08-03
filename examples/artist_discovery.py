@@ -8,6 +8,7 @@ Run:
     python examples/artist_discovery.py "The Beatles"
 """
 import sys
+
 from pyheartradio import IHeartRadio
 
 client = IHeartRadio()

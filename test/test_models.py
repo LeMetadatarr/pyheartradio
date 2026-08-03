@@ -1,7 +1,15 @@
 from dataclasses import asdict
+
 from pyheartradio.models import (
-    Album, Artist, NowPlaying, Playlist, Podcast, PodcastEpisode,
-    SearchResults, Station, Track,
+    Album,
+    Artist,
+    NowPlaying,
+    Playlist,
+    Podcast,
+    PodcastEpisode,
+    SearchResults,
+    Station,
+    Track,
 )
 
 

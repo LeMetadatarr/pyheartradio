@@ -10,6 +10,7 @@ Run:
     python examples/unified_search.py "Radiohead"
 """
 import sys
+
 from pyheartradio import IHeartRadio
 
 client = IHeartRadio()

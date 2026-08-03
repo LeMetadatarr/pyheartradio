@@ -1,11 +1,19 @@
 import logging
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Iterator, List, Optional
+
 import requests
 
 from pyheartradio.models import (
-    Album, Artist, NowPlaying, Playlist, Podcast, PodcastEpisode,
-    SearchResults, Station, Track,
+    Album,
+    Artist,
+    NowPlaying,
+    Playlist,
+    Podcast,
+    PodcastEpisode,
+    SearchResults,
+    Station,
+    Track,
 )
 
 _DEFAULT_MAX_RESULTS = 10
@@ -90,7 +98,8 @@ class IHeartRadio:
         if not items:
             return []
         results: dict = {}
-        with ThreadPoolExecutor(max_workers=min(self.max_workers, len(items))) as pool:
+        workers = max(1, min(self.max_workers, len(items)))
+        with ThreadPoolExecutor(max_workers=workers) as pool:
             futures = {pool.submit(fn, item): i for i, item in enumerate(items)}
             for fut in as_completed(futures):
                 idx = futures[fut]
@@ -434,8 +443,11 @@ class IHeartRadio:
         raw = data.get("track")
         if not isinstance(raw, dict):
             raw = data
+        # Explicit None check — an id of 0 is a valid (if unusual) response
+        # value and must not be discarded in favour of the requested track_id.
+        raw_id = raw.get("id")
         return Track(
-            id=raw.get("id") or track_id,
+            id=raw_id if raw_id is not None else track_id,
             title=raw.get("title") or raw.get("trackTitle") or "",
             artist=raw.get("artistName") or raw.get("artist") or "",
             album=raw.get("albumName") or raw.get("album") or "",
@@ -466,9 +478,13 @@ class IHeartRadio:
             The numeric iHeartRadio artist ID.
         """
         data = self._get(self.similar_artists_url.format(artist_id=artist_id))
-        for raw in data.get("artists") or data.get("data") or []:
+        # The live endpoint nests results under "similarArtists" with
+        # "artistId"/"artistName"/"link" fields; "artists"/"data"/"id"/"name"/
+        # "image" are kept as fallbacks for alternate response shapes.
+        raws = data.get("similarArtists") or data.get("artists") or data.get("data") or []
+        for raw in raws:
             yield Artist(
-                id=raw.get("id") or raw.get("artistId") or 0,
-                title=raw.get("name") or raw.get("artistName") or "",
-                image=raw.get("image") or raw.get("imageUrl") or "",
+                id=raw.get("artistId") or raw.get("id") or 0,
+                title=raw.get("artistName") or raw.get("name") or "",
+                image=raw.get("link") or raw.get("image") or raw.get("imageUrl") or "",
             )

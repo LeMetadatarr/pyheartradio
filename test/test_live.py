@@ -7,7 +7,6 @@ and can be triggered manually.
 Run locally:
     pytest test/test_live.py -v
 """
-import pytest
 from pyheartradio import IHeartRadio
 from pyheartradio.models import Artist, Playlist, Podcast, PodcastEpisode, Station, Track
 

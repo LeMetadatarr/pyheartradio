@@ -8,6 +8,7 @@ Run:
     python examples/search_all.py "NPR"
 """
 import sys
+
 from pyheartradio import IHeartRadio
 
 client = IHeartRadio()
