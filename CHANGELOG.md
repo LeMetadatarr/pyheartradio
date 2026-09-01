@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.1a6](https://github.com/LeMetadatarr/pyheartradio/tree/0.1.1a6) (2026-09-01)
+
+[Full Changelog](https://github.com/LeMetadatarr/pyheartradio/compare/0.1.1a5...0.1.1a6)
+
+**Merged pull requests:**
+
+- chore\(deps\): update actions/setup-python action to v7 [\#9](https://github.com/LeMetadatarr/pyheartradio/pull/9) ([renovate[bot]](https://github.com/apps/renovate))
+
 ## [0.1.1a5](https://github.com/LeMetadatarr/pyheartradio/tree/0.1.1a5) (2026-08-03)
 
 [Full Changelog](https://github.com/LeMetadatarr/pyheartradio/compare/0.1.1a4...0.1.1a5)
